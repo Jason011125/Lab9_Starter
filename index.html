@@ -83,9 +83,16 @@
             <button onclick="time()">Start Timer</button>
             <button onclick="endtime()">End Timer</button>
             <button onclick="trace()">Console Trace</button>
-            <button>Trigger a Global Error</button>
+            <button onclick="triggerErr()">Trigger a Global Error</button>
         </section>
     </main>
+    <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+    <script>
+        window.TrackJS && TrackJS.install({
+            token: "841cd7b209504729802d8a0f286b948b"
+                // for more configuration options, see https://docs.trackjs.com
+        });
+    </script>
 
     <script>
         let form = document.querySelector('form');
@@ -97,10 +104,12 @@
 
             let operator = document.querySelector('#operator').value;
             output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+
             try {
-                if (firstNum == 1) throw "fisrtNum = 1"
+                if (firstNum != secondNum)
+                    throw new CheckCondition("first is not equal to second");
             } catch (err) {
-                console.log(err);
+                console.error(err);
             }
         });
 
@@ -161,6 +170,22 @@
         function trace() {
             console.trace();
         }
+
+        class CheckCondition extends Error {
+            constructor(msg) {
+                super(msg);
+            }
+        }
+        const name = 123;
+
+        function triggerErr() {
+            name = "123";
+        }
+        window.onerror = function(msg, url, linenumber) {
+            console.log('Error message: ' + msg + '\nURL: ' + url + '\nLine Number: ' + linenumber);
+            return true;
+        }
+        TrackJS.track('Testing TrackJS!');
 
 
         // Start your code here
