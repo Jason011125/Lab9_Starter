@@ -2,107 +2,170 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lab 9</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 9</title>
 
-  <style>
-    button {
-      margin: 3px;
-    }
-
-    button:hover {
-      cursor: pointer;
-    }
-
-    #first-num,
-    #second-num {
-      width: 60px;
-    }
-
-    output {
-      border: 1px solid gray;
-      display: block;
-      height: 18px;
-      margin-top: 5px;
-      padding: 5px;
-      width: 240px;
-    }
-
-    main {
-      width: 800px;
-    }
-
-    #error-btns {
-      column-gap: 5px;
-      display: flex;
-      flex-wrap: wrap;
-      margin-top: 30px;
-      row-gap: 5px;
-    }
-
-    #error-btns>* {
-      padding: 8px 2px;
-      width: 122px;
-    }
-  </style>
+    <style>
+        button {
+            margin: 3px;
+        }
+        
+        button:hover {
+            cursor: pointer;
+        }
+        
+        #first-num,
+        #second-num {
+            width: 60px;
+        }
+        
+        output {
+            border: 1px solid gray;
+            display: block;
+            height: 18px;
+            margin-top: 5px;
+            padding: 5px;
+            width: 240px;
+        }
+        
+        main {
+            width: 800px;
+        }
+        
+        #error-btns {
+            column-gap: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            row-gap: 5px;
+        }
+        
+        #error-btns>* {
+            padding: 8px 2px;
+            width: 122px;
+        }
+    </style>
 </head>
 
 <body>
-  <main>
-    <form>
-      <fieldset>
-        <legend>Error Calculator</legend>
-        <input name="first-num" id="first-num" />
-        <select name="operator" id="operator">
+    <main>
+        <form>
+            <fieldset>
+                <legend>Error Calculator</legend>
+                <input name="first-num" id="first-num" />
+                <select name="operator" id="operator">
           <option>+</option>
           <option>-</option>
           <option>*</option>
           <option>/</option>
         </select>
-        <input name="second-num" id="second-num" />
-        <button id="calculate">Calculate</button>
-        <br />
-        <output></output>
-      </fieldset>
-    </form>
+                <input name="second-num" id="second-num" />
+                <button id="calculate">Calculate</button>
+                <br />
+                <output></output>
+            </fieldset>
+        </form>
 
-    <section id="error-btns">
-      <button>Console Log</button>
-      <button>Console Error</button>
-      <button>Console Count</button>
-      <button>Console Warn</button>
-      <button>Console Assert</button>
-      <button>Console Clear</button>
-      <button>Console Dir</button>
-      <button>Console dirxml</button>
-      <button>Console Group Start</button>
-      <button>Console Group End</button>
-      <button>Console Table</button>
-      <button>Start Timer</button>
-      <button>End Timer</button>
-      <button>Console Trace</button>
-      <button>Trigger a Global Error</button>
-    </section>
-  </main>
+        <section id="error-btns">
+            <button onclick="log()">Console Log</button>
+            <button onclick="error()">Console Error</button>
+            <button onclick="count()">Console Count</button>
+            <button onclick="warn()">Console Warn</button>
+            <button onclick="assert()">Console Assert</button>
+            <button onclick="clearMe()">Console Clear</button>
+            <button onclick="consoleDir()">Console Dir</button>
+            <button onclick="dirXml()">Console dirxml</button>
+            <button onclick="group()">Console Group Start</button>
+            <button onclick="endGroup()">Console Group End</button>
+            <button onclick="table()">Console Table</button>
+            <button onclick="time()">Start Timer</button>
+            <button onclick="endtime()">End Timer</button>
+            <button onclick="trace()">Console Trace</button>
+            <button>Trigger a Global Error</button>
+        </section>
+    </main>
 
-  <script>
-    let form = document.querySelector('form');
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      let output = document.querySelector('output');
-      let firstNum = document.querySelector('#first-num').value;
-      let secondNum = document.querySelector('#second-num').value;
-      let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
-    });
+    <script>
+        let form = document.querySelector('form');
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            let output = document.querySelector('output');
+            let firstNum = document.querySelector('#first-num').value;
+            let secondNum = document.querySelector('#second-num').value;
 
-    let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
+            let operator = document.querySelector('#operator').value;
+            output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+            try {
+                if (firstNum == 1) throw "fisrtNum = 1"
+            } catch (err) {
+                console.log(err);
+            }
+        });
 
-    // Start your code here
-    // You may move this JS to another file if you wish
-  </script>
+        let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
+
+        function log() {
+            console.log("log")
+        }
+
+        function error() {
+            console.error("err")
+        }
+
+        function count() {
+            console.count();
+        }
+
+        function warn() {
+            console.warn("warning")
+        }
+
+        function assert() {
+            console.assert(4 + 3 == 11, "Expression returned false");
+        }
+
+        function clearMe() {
+            console.clear();
+        }
+
+        function consoleDir() {
+            console.dir(document.location)
+        }
+
+        function dirXml() {
+            console.dirxml(document)
+        }
+
+        function group() {
+            console.group();
+        }
+
+        function endGroup() {
+            console.groupEnd();
+        }
+
+        function table() {
+            console.table(["apples", "oranges", "bananas"]);
+        }
+
+        function time() {
+            console.time();
+        }
+
+        function endtime() {
+            console.timeEnd();
+        }
+
+        function trace() {
+            console.trace();
+        }
+
+
+        // Start your code here
+        // You may move this JS to another file if you wish
+    </script>
 </body>
 
 </html>
